@@ -41,4 +41,87 @@
     .stat-label { font-size: 10px; color: var(--light); letter-spacing: 0.07em; text-transform: uppercase; margin-top: 5px; line-height: 1.45; }
     .stat-divider { width: 1px; height: 38px; background: var(--border); flex-shrink: 0; }
     .form-block { width: 100%; max-width: 400px; }
-    .input-stack { display: flex; flex-direction:
+    .input-stack { display: flex; flex-direction: column; gap: 10px; }
+    input[type="text"], input[type="email"] { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; background: #fff; color: var(--ink); outline: none; transition: border-color 0.18s; }
+    input::placeholder { color: var(--light); }
+    input:focus { border-color: var(--ink); }
+    .btn { width: 100%; padding: 15px; background: var(--ink); color: var(--cream); border: none; border-radius: 10px; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; letter-spacing: 0.05em; cursor: pointer; transition: background 0.18s, transform 0.1s; }
+    .btn:hover { background: #2e2e2e; }
+    .btn:active { transform: scale(0.985); }
+    .fine { font-size: 11.5px; color: var(--light); text-align: center; margin-top: 11px; }
+    .success { display: none; text-align: center; padding: 14px 18px; background: var(--success-bg); border: 1px solid var(--success-border); border-radius: 10px; font-size: 14px; color: var(--success-text); line-height: 1.5; }
+    .section-divider { width: 100%; max-width: 400px; display: flex; align-items: center; gap: 14px; margin: 44px 0; }
+    .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border-light); }
+    .section-divider span { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--light); white-space: nowrap; }
+    .brand-tag { display: inline-block; background: var(--ink); color: var(--cream); font-size: 9.5px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; opacity: 0.6; margin-bottom: 14px; }
+    .brand-sub { font-size: 14px; font-weight: 300; color: var(--muted); text-align: center; max-width: 300px; line-height: 1.65; margin-bottom: 24px; }
+    .brand-sub strong { color: var(--ink-soft); font-weight: 500; }
+    .footer { margin-top: 60px; font-size: 11px; color: var(--light); text-align: center; letter-spacing: 0.06em; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="pill fade-1"><span class="pulse-dot"></span>Early access — limited spots</div>
+    <h1 class="headline fade-2">Inner<br>Intel<br><span class="ghost">//</span>Circle</h1>
+    <p class="sub fade-3">Over <strong>350,000 UK TikTok affiliates.</strong><br>Most are guessing what to film next.<br>The ones inside IIC already know.</p>
+    <p class="consistency fade-3">Consistency is the product.</p>
+    <div class="stats fade-4">
+      <div class="stat"><div class="stat-num">350k+</div><div class="stat-label">UK affiliates<br>out there</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><div class="stat-num">£16</div><div class="stat-label">Per month<br>all included</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><div class="stat-num" id="spots-num">199</div><div class="stat-label">Early access<br>spots left</div></div>
+    </div>
+    <div class="form-block fade-5">
+      <form id="aff-form" action="https://formspree.io/f/meepdddq" method="POST">
+        <div class="input-stack">
+          <input type="text" name="name" placeholder="Your first name" required />
+          <input type="email" name="email" placeholder="Your email address" required />
+          <input type="hidden" name="type" value="Affiliate" />
+          <button type="submit" class="btn">Secure my spot</button>
+        </div>
+      </form>
+      <div class="success" id="aff-success">You're on the list.<br>We'll be in touch before anyone else.</div>
+      <p class="fine">No spam. No commitment. Just early access.</p>
+    </div>
+    <div class="section-divider fade-6"><span>For brands &amp; sellers</span></div>
+    <div class="brand-tag fade-6">Brand interest</div>
+    <p class="brand-sub fade-6">Want your product filmed by <strong>1,000 active UK creators?</strong><br>Register your interest below.</p>
+    <div class="form-block fade-7">
+      <form id="brand-form" action="https://formspree.io/f/meepdddq" method="POST">
+        <div class="input-stack">
+          <input type="text" name="name" placeholder="Your name or brand" required />
+          <input type="email" name="email" placeholder="Business email" required />
+          <input type="hidden" name="type" value="Brand" />
+          <button type="submit" class="btn">Register brand interest</button>
+        </div>
+      </form>
+      <div class="success" id="brand-success">Registered. We'll reach out when brand spots open.</div>
+    </div>
+    <p class="footer fade-7">© 2026 Inner Intel Circle &nbsp;·&nbsp; innerintelcircle@gmail.com</p>
+  </div>
+  <script>
+    let spots = 199;
+    document.getElementById('aff-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(this);
+      const res = await fetch('https://formspree.io/f/meepdddq', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+      if (res.ok) {
+        this.style.display = 'none';
+        document.getElementById('aff-success').style.display = 'block';
+        spots = Math.max(0, spots - 1);
+        document.getElementById('spots-num').textContent = spots;
+      }
+    });
+    document.getElementById('brand-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(this);
+      const res = await fetch('https://formspree.io/f/meepdddq', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+      if (res.ok) {
+        this.style.display = 'none';
+        document.getElementById('brand-success').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
