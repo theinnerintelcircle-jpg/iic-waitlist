@@ -346,7 +346,7 @@
       </div>
       <div class="stat-divider"></div>
       <div class="stat">
-        <div class="stat-num" id="spots-num">47</div>
+        <div class="stat-num" id="spots-num">199</div>
         <div class="stat-label">Early access<br>spots left</div>
       </div>
     </div>
@@ -387,35 +387,57 @@
       </div>
     </div>
 
-    <p class="footer fade-7">© 2026 Inner Intel Circle &nbsp;·&nbsp; innerintelcircle@gmail.com</p>
+    <p class="footer fade-7">© 2026 Inner Intel Circle &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cfa6a1a1aabda6a1bbaaa3aca6bdaca3aa8fa8a2aea6a3e1aca0a2">[email&#160;protected]</a></p>
 
   </div>
 
-  <script>
-    let spots = 47;
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    let spots = 199;
 
-    function submitAffiliate() {
+    async function submitAffiliate() {
       const name  = document.getElementById('aff-name').value.trim();
       const email = document.getElementById('aff-email').value.trim();
       if (!name || !email || !email.includes('@')) {
         shake('aff-form');
         return;
       }
-      document.getElementById('aff-form').style.display    = 'none';
-      document.getElementById('aff-success').style.display = 'block';
-      spots = Math.max(0, spots - 1);
-      document.getElementById('spots-num').textContent = spots;
+      try {
+        const res = await fetch('https://formspree.io/f/meepdddq', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ type: 'Affiliate', name, email })
+        });
+        if (res.ok) {
+          document.getElementById('aff-form').style.display    = 'none';
+          document.getElementById('aff-success').style.display = 'block';
+          spots = Math.max(0, spots - 1);
+          document.getElementById('spots-num').textContent = spots;
+        } else {
+          shake('aff-form');
+        }
+      } catch(e) { shake('aff-form'); }
     }
 
-    function submitBrand() {
+    async function submitBrand() {
       const name  = document.getElementById('brand-name').value.trim();
       const email = document.getElementById('brand-email').value.trim();
       if (!name || !email || !email.includes('@')) {
         shake('brand-form');
         return;
       }
-      document.getElementById('brand-form').style.display    = 'none';
-      document.getElementById('brand-success').style.display = 'block';
+      try {
+        const res = await fetch('https://formspree.io/f/meepdddq', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ type: 'Brand', name, email })
+        });
+        if (res.ok) {
+          document.getElementById('brand-form').style.display    = 'none';
+          document.getElementById('brand-success').style.display = 'block';
+        } else {
+          shake('brand-form');
+        }
+      } catch(e) { shake('brand-form'); }
     }
 
     function shake(id) {
@@ -427,13 +449,4 @@
 
     const shakeStyle = document.createElement('style');
     shakeStyle.textContent = `
-      @keyframes shake {
-        0%,100% { transform: translateX(0); }
-        25%      { transform: translateX(-6px); }
-        75%      { transform: translateX(6px); }
-      }
-    `;
-    document.head.appendChild(shakeStyle);
-  </script>
-</body>
-</html>
+      @keyframes sh
