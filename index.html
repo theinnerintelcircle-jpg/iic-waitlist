@@ -81,7 +81,7 @@
       </div>
       <div class="stat-divider"></div>
       <div class="stat">
-        <div class="stat-num" id="spots-num">199</div>
+        <div class="stat-num" id="spots-num">399</div>
         <div class="stat-label">Early access<br>spots left</div>
       </div>
     </div>
@@ -96,7 +96,7 @@
     <div class="form-block fade-6">
       <form id="aff-form" action="https://formspree.io/f/meepdddq" method="POST">
         <div class="input-stack">
-          <input type="text" name="name" placeholder="Your first name" required />
+          <input type="text" name="tiktok" placeholder="Your TikTok handle (@yourname)" required />
           <input type="email" name="email" placeholder="Your email address" required />
           <input type="hidden" name="type" value="Affiliate" />
           <button type="submit" class="btn">Lock in £10 &mdash; secure my spot</button>
@@ -109,7 +109,7 @@
     <p class="footer fade-6">&copy; 2026 Inner Intel Circle &nbsp;&middot;&nbsp; innerintelcircle@gmail.com</p>
   </div>
   <script>
-    let spots = 199;
+    let spots = 399;
     document.getElementById('aff-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       const data = new FormData(this);
